@@ -1,13 +1,16 @@
 from typing import List, Dict, Any
 
 def get_customers_by_credit_limit_range(conn):
+    from db import get_db_connection
+    conn = get_db_connection()
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         cursor.execute('''
                     SELECT customerName, creditLimit
                     FROM customers
                     WHERE creditLimit < 10000 or creditLimit > 100000
                     ''')
+        
         return cursor.fetchall()
     except Exception as e:
         raise e
@@ -17,7 +20,7 @@ def get_customers_by_credit_limit_range(conn):
 def get_orders_with_null_comments(conn):
 
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         cursor.execute('''
                     SELECT orderNumber,comments 
                     FROM orders
@@ -32,7 +35,7 @@ def get_orders_with_null_comments(conn):
 
 def get_first_5_customers(conn):
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         cursor.execute('''
                     SELECT customerName, contactFirstName, contactLastName
                     FROM customers
@@ -47,7 +50,7 @@ def get_first_5_customers(conn):
         
 def get_payments_total_and_average(conn):
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         cursor.execute('''
                     SELECT sum(amount), avg(amount), max(amount), min(amount)
                     FROM payments
@@ -60,7 +63,7 @@ def get_payments_total_and_average(conn):
 
 def get_employees_with_office_phone(conn):
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         cursor.execute('''
                     SELECT e.firstName,e.lastName, offi.phone
                     FROM employees as e
@@ -75,7 +78,7 @@ def get_employees_with_office_phone(conn):
 
 def get_customers_with_shipping_dates(conn):
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         cursor.execute('''
                     SELECT c.customerName, o.requiredDate
                     FROM customers as c
@@ -90,7 +93,7 @@ def get_customers_with_shipping_dates(conn):
 
 def get_customer_quantity_per_order(conn):
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         cursor.execute('''
                     SELECT c.customerName, max(od.orderLineNumber) as maxByOrder 
                     FROM customers as c
@@ -109,7 +112,7 @@ def get_customer_quantity_per_order(conn):
 
 def get_customers_payments_by_lastname_pattern(conn):
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         cursor.execute('''
                     SELECT c.customerName, concat(e.firstName, " ", e.lastName) as employeeName, sum(p.amount) as total
                     FROM customers as c
