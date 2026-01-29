@@ -1,8 +1,16 @@
 from typing import List, Dict, Any
+from db import get_db_connection
+
+conn = get_db_connection()
 
 def get_customers_by_credit_limit_range():
-    """Return customers with credit limits outside the normal range."""
-    pass
+    cursor = conn.cursor()
+    cursor.execute('''
+                   SELECT customerName, creditLimit
+                   FROM customers
+                   WHERE creditLimit < 10000 or creditLimit > 100000
+                   ''')
+    return cursor.fetchall()
 
 def get_orders_with_null_comments():
     """Return orders that have null comments."""

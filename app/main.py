@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from db_init import init_database
-
+from db import get_db_connection
 app = FastAPI()
+from dal import *
 
 init_database()
 
@@ -11,8 +12,9 @@ def health_check():
 
 @app.get("/q1/customers-credit-limit-outliers")
 def customers_credit_limit_outliers():
-    pass
-
+    conn = get_db_connection()
+    res = get_customers_by_credit_limit_range(conn)
+    
 @app.get("/q2/orders-null-comments")
 def orders_null_comments():
     pass
