@@ -2,8 +2,9 @@ from fastapi import FastAPI
 from db_init import init_database
 from dal import *
 from db import get_db_connection
-import json
+
 app = FastAPI()
+from dal import *
 
 init_database()
 

@@ -1,9 +1,7 @@
 from typing import List, Dict, Any
-from db import get_db_connection
 
 def get_customers_by_credit_limit_range(conn):
     try:
-        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('''
                     SELECT customerName, creditLimit
@@ -17,6 +15,7 @@ def get_customers_by_credit_limit_range(conn):
         conn.close()
 
 def get_orders_with_null_comments(conn):
+
     try:
         cursor = conn.cursor()
         cursor.execute('''
