@@ -14,7 +14,7 @@ def health_check():
 def customers_credit_limit_outliers():
     conn = get_db_connection()
     res = get_customers_by_credit_limit_range(conn)
-    
+    return res
 @app.get("/q2/orders-null-comments")
 def orders_null_comments():
     pass

@@ -4,17 +4,33 @@ from db import get_db_connection
 conn = get_db_connection()
 
 def get_customers_by_credit_limit_range():
-    cursor = conn.cursor()
-    cursor.execute('''
-                   SELECT customerName, creditLimit
-                   FROM customers
-                   WHERE creditLimit < 10000 or creditLimit > 100000
-                   ''')
-    return cursor.fetchall()
+    try:
+        cursor = conn.cursor()
+        cursor.execute('''
+                    SELECT customerName, creditLimit
+                    FROM customers
+                    WHERE creditLimit < 10000 or creditLimit > 100000
+                    ''')
+        return cursor.fetchall()
+    except Exception as e:
+        raise e
+    finally:
+        conn.close()
 
 def get_orders_with_null_comments():
-    """Return orders that have null comments."""
-    pass
+    try:
+        cursor = conn.cursor()
+        cursor.execute('''
+                    SELECT orderNumber,comments 
+                    FROM orders
+                    WHERE comments is not null
+                    ORDER BY orderDate
+                    ''')
+        return cursor.fetchall()
+    except Exception as e:
+        raise e
+    finally:
+        conn.close()
 
 def get_first_5_customers():
     """Return the first 5 customers."""
