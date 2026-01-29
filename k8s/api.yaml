@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: naftali96/mysql-classicmodels:v4
+        image: naftali96/mysql-classicmodels:v5
         ports:
         - containerPort: 8000
 
