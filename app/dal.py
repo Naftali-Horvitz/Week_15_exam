@@ -24,7 +24,7 @@ def get_orders_with_null_comments(conn):
         cursor.execute('''
                     SELECT orderNumber,comments 
                     FROM orders
-                    WHERE comments is not null
+                    WHERE comments is null
                     ORDER BY orderDate
                     ''')
         return cursor.fetchall()
