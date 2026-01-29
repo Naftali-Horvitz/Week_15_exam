@@ -1,7 +1,9 @@
 from typing import List, Dict, Any
+from db import get_db_connection
 
 def get_customers_by_credit_limit_range(conn):
     try:
+        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('''
                     SELECT customerName, creditLimit
